@@ -9,6 +9,15 @@ public class PaycheckCalculator {
 		double result = payRate * hours;
 		return result;
 	}
+	public static double getTaxRate(double gross) {
+		if (gross > 2000) {
+			return 0.25;
+		} else if (gross > 1000) {
+			return 0.15;
+		} else {
+			return 0.1;
+		}
+	}
 	public static void main(String[] args) {
 		double payRate;
 		double hoursWorked;
@@ -21,5 +30,9 @@ public class PaycheckCalculator {
 		gross = Math.ceil(gross);
 		System.out.printf("You worked %.2f hours at a rate of $%.2f.\n", hoursWorked,payRate);
 		System.out.printf("Your gross pay is $%.2f.\n", gross);	
+		double taxRate = getTaxRate(gross);
+		double taxes = taxRate * gross;
+		double net = gross - taxes;
+		System.out.printf("Your take-home pay is $%.2f.\n", net);
 	}
 }
