@@ -2,16 +2,17 @@ import java.util.Scanner;
 public class PaycheckMultipleEmployees {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int empCount;
 		double hours, rate, gross;
-		System.out.print("How many employees? ");
-		empCount = sc.nextInt();
-		for (int i = 0; i < empCount; i++) {
+		String doAgain = "y";
+		while (doAgain.equalsIgnoreCase("y")) {
 			System.out.print("Enter hours and rate: ");
 			hours = sc.nextDouble();
 			rate = sc.nextDouble();
 			gross = hours * rate;
 			System.out.printf("Gross = $%.2f.\n", gross);
+			System.out.print("Again? ");
+			doAgain = sc.next(); 
 		}
+		System.out.println("Thank you for using this program.");
 	}
 }
