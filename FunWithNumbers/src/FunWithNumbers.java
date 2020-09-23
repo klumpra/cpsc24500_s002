@@ -1,5 +1,17 @@
 import java.util.Scanner;
 public class FunWithNumbers {
+	public static int printMenuAndGetChoice(Scanner sc) {
+		int choice;
+		System.out.println("What would you like to do? ");
+		System.out.println("1. Add");
+		System.out.println("2. Sub");
+		System.out.println("3. Mult");
+		System.out.println("4. Divide");
+		System.out.println("5. Quit");
+		System.out.print("Enter the number of your choice: ");
+		choice = sc.nextInt();
+		return choice;
+	}
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int num1, num2, choice;
@@ -9,14 +21,7 @@ public class FunWithNumbers {
 		num1 = sc.nextInt();
 		num2 = sc.nextInt();
 		do {
-			System.out.println("What would you like to do? ");
-			System.out.println("1. Add");
-			System.out.println("2. Sub");
-			System.out.println("3. Mult");
-			System.out.println("4. Divide");
-			System.out.println("5. Quit");
-			System.out.print("Enter the number of your choice: ");
-			choice = sc.nextInt();
+			choice = printMenuAndGetChoice(sc);
 			if (choice == 1) {
 				sum = num1 + num2;
 				System.out.printf("%d + %d = %d\n", num1,num2,sum);
