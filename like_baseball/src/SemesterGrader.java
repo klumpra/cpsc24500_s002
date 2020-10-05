@@ -28,21 +28,22 @@ public class SemesterGrader {
 			System.out.printf("%-10s%6.2f\n",parts[0],avg);
 		}
 	}
+	// inserts a new record into the all list ordered by avg score
 	public static void insertByAverage(ArrayList<String> all, String line) {
 		double thisAvg = getAverage(line);
 		double otherAvg;
-		int pos = -1;
+		int pos = -1; // where to insert line. If this stays -1, I'll just add the new person to the end
 		for (int i = 0; i < all.size(); i++) {
-			otherAvg = getAverage(all.get(i));
+			otherAvg = getAverage(all.get(i));	
 			if (thisAvg > otherAvg) {
 				pos = i;
-				break;
+				break;   // I know where to insert the line, so leave
 			}
 		}
 		if (pos < 0) {
-			all.add(line);
+			all.add(line);  // append it to the end
 		} else {
-			all.add(pos,line);
+			all.add(pos,line);   // insert at position pos
 		}
 	}
 	public static void main(String[] args) {
