@@ -22,6 +22,8 @@ class DrawingPanel extends JPanel implements MouseListener, MouseMotionListener 
 	private String mouseStatus;
 	public DrawingPanel() {
 		mouseStatus = "Welcome!";
+		addMouseListener(this);
+		addMouseMotionListener(this);
 	}
 	@Override
 	public void paintComponent(Graphics g) {
@@ -34,13 +36,35 @@ class DrawingPanel extends JPanel implements MouseListener, MouseMotionListener 
 	public void setMouseStatus(String ms) {
 		mouseStatus = ms;
 	}
-	public void mouseEntered(MouseEvent e) { }
-	public void mouseExited(MouseEvent e) { }
-	public void mousePressed(MouseEvent e) { }
-	public void mouseReleased(MouseEvent e) { }
-	public void mouseClicked(MouseEvent e) { }
-	public void mouseMoved(MouseEvent e) { }
-	public void mouseDragged(MouseEvent e) { }
+	public void mouseEntered(MouseEvent e) { 
+		mouseStatus = "Entered the window.";
+		repaint();
+	}
+	public void mouseExited(MouseEvent e) {
+		mouseStatus = "Exited the window.";
+		repaint();
+	}
+	public void mousePressed(MouseEvent e) {
+		mouseStatus = String.format("Mouse pressed at (%d, %d)", e.getX(), e.getY());
+		repaint();
+	}
+	public void mouseReleased(MouseEvent e) {
+		mouseStatus = String.format("Mouse released at (%d, %d)", e.getX(), e.getY());
+		repaint();
+	}
+	public void mouseClicked(MouseEvent e) { 
+		mouseStatus = String.format("Mouse clicked at (%d, %d)", e.getX(), e.getY());
+		repaint();
+	}
+	public void mouseMoved(MouseEvent e) { 
+		mouseStatus = String.format("Mouse moved at (%d, %d)", e.getX(), e.getY());
+		repaint();
+		
+	}
+	public void mouseDragged(MouseEvent e) { 
+		mouseStatus = String.format("Mouse dragged at (%d, %d)", e.getX(), e.getY());
+		repaint();
+	}
 
 }
 
