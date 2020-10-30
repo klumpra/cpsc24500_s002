@@ -1,8 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +18,32 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+class DrawingPanel extends JPanel implements MouseListener, MouseMotionListener {
+	private String mouseStatus;
+	public DrawingPanel() {
+		mouseStatus = "Welcome!";
+	}
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawString(mouseStatus, 20, 20);
+	}
+	public String getMouseStatus() {
+		return mouseStatus;
+	}
+	public void setMouseStatus(String ms) {
+		mouseStatus = ms;
+	}
+	public void mouseEntered(MouseEvent e) { }
+	public void mouseExited(MouseEvent e) { }
+	public void mousePressed(MouseEvent e) { }
+	public void mouseReleased(MouseEvent e) { }
+	public void mouseClicked(MouseEvent e) { }
+	public void mouseMoved(MouseEvent e) { }
+	public void mouseDragged(MouseEvent e) { }
+
+}
+
 class MenuAndMouseFrame extends JFrame {
 	private DrawingPanel pan;
 	public void setupMenu() {
@@ -22,6 +52,8 @@ class MenuAndMouseFrame extends JFrame {
 		JMenuItem miClear = new JMenuItem("Clear");
 		miClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				pan.setMouseStatus("");
+				repaint();
 			}
 		});
 		JMenuItem miExit = new JMenuItem("Exit");
@@ -48,7 +80,7 @@ class MenuAndMouseFrame extends JFrame {
 		setBounds(100,100,500,500);
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
-		pan = new JPanel();
+		pan = new DrawingPanel();
 		c.add(pan,BorderLayout.CENTER);
 		JPanel panSouth = new JPanel();
 		panSouth.setLayout(new FlowLayout());
