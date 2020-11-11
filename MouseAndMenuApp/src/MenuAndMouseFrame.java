@@ -3,6 +3,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -27,7 +28,7 @@ public class MenuAndMouseFrame extends JFrame {
 				DotWriter dw;
 				if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 					dw = new DotWriter();
-					if (dw.writeToText(jfc.getSelectedFile(),pan.getDots())) {
+					if (dw.writeToBinary(jfc.getSelectedFile(),pan.getDots())) {
 						JOptionPane.showMessageDialog(null,"Dots were written.");
 					} else {
 						JOptionPane.showMessageDialog(null,"Dots could not be written.");
@@ -36,6 +37,25 @@ public class MenuAndMouseFrame extends JFrame {
 			}
 		});
 		mnuFile.add(miSave);
+		JMenuItem miLoad = new JMenuItem("Load");
+		miLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser jfc = new JFileChooser();
+				DotReader dr;
+				ArrayList<Dot> dotsRead;
+				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					dr = new DotReader();
+					dotsRead = dr.readFromBinary(jfc.getSelectedFile());
+					if (dotsRead == null) {
+						JOptionPane.showMessageDialog(null,"Could not read.");
+					} else {
+						pan.setDots(dotsRead);
+						repaint();
+					}
+				}
+			}
+		});
+		mnuFile.add(miLoad);
 		JMenuItem miClear = new JMenuItem("Clear");
 		miClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
