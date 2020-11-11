@@ -48,4 +48,22 @@ public class DotReader {
 			return null;
 		}
 	}
+	public ArrayList<Dot> read(String fname) {
+		File f = new File(fname);
+		return read(f);
+	}
+	public ArrayList<Dot> read(File f) {
+		try {
+			String fname = f.getName().toUpperCase();
+			if (fname.endsWith(".TXT")) {
+				return readFromText(f);
+			} else if (fname.endsWith(".BIN")) {
+				return readFromBinary(f);
+			} else {
+				return null;  // unrecognized extension
+			}
+		} catch (Exception ex) {
+			return null;
+		}
+	}
 }
