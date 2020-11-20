@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import org.json.simple.JSONObject;
+
 /**
  * DotWriter writes dots in a variety of file formats.
  * Eventually, it will write text, binary, xml, and json.
@@ -75,6 +77,18 @@ public class DotWriter {
 			enc.writeObject(dots);
 			enc.close();
 			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
+	public boolean writeToJSON(String fname, ArrayList<Dot> dots) {
+		File f = new File(fname);
+		return writeToJSON(f,dots);
+	}
+	public boolean writeToJSON(File f, ArrayList<Dot> dots) {
+		try {
+			JSONObject obj = new JSONObject();
+			
 		} catch (Exception ex) {
 			return false;
 		}
