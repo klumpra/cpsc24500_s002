@@ -9,7 +9,8 @@ public class ArticleApp {
 		System.out.println("2. Print articles.");
 		System.out.println("3. Save articles.");
 		System.out.println("4. Delete articles.");
-		System.out.println("5. Exit");
+		System.out.println("5. Load articles.");
+		System.out.println("6. Exit");
 		System.out.print("Enter your choice: ");
 		int result = sc.nextInt();
 		sc.nextLine(); // clear the end-of-line marker
@@ -36,7 +37,8 @@ public class ArticleApp {
 		ArrayList<Article> articles = new ArrayList<Article>();
 		int toRemove;
 		String path; // where the json to write is located
-		ArticleWriter aw = new ArticleWriter();
+		ArticleWriter aw = new ArticleWriter();   // controller class
+		ArticleReader ar = new ArticleReader();
 		do {
 			choice = showMenuAndGetChoice(sc);
 			if (choice == 1) { //add an article
@@ -53,13 +55,60 @@ public class ArticleApp {
 			} else if (choice == 3) {
 				System.out.print("Enter path to json file: ");
 				path = sc.nextLine();
-				aw.writeToJSON(path,articles);
+				if (aw.writeToJSON(path,articles)) {
+					System.out.println("Saved articles successfully.");
+				} else {
+					System.out.println("Couldn't save articles.");
+				}
 			} else if (choice == 4) {
 				System.out.print("Enter number of article to remove: ");
 				toRemove = sc.nextInt();
 				articles.remove(toRemove);
+			} else if (choice == 5) {
+				System.out.print("Enter name of file: ");
+				path = sc.nextLine();
+				articles = ar.readFromJSON(path);
+				if (articles == null) {
+					System.out.println("Fail!");
+				} else {
+					System.out.println("Success!");
+				}
 			}
-		} while (choice != 5);
+		} while (choice != 6);
 		System.out.println("Support Freedom of the Press!");
 	}
 }
+
+/*
+ * By the way, here is the code for the website:
+ * 
+<html>
+<head></head>
+<body>
+<div id="id01"></div>
+<script>
+var xmlhttp = new XMLHttpRequest();
+var url = "articles.json";
+xmlhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		var resp = JSON.parse(this.responseText);
+		myFunction(resp);
+	}
+}
+xmlhttp.open("GET",url,true);
+xmlhttp.send();
+function myFunction(resp) {
+	var out = "";
+	var i;
+	for (i = 0; i < resp.articles.length; i++) {
+		out += "<h1>" + resp.articles[i].title + "</h1><h3>" + 
+			resp.articles[i].author + "</h3><p>" + 
+			resp.articles[i].text + "</p><br/><hr/>";
+	}
+	document.getElementById("id01").innerHTML = out;
+}
+</script>
+</body>
+</html>
+
+*/

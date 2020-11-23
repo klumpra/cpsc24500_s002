@@ -4,6 +4,9 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 /**
  * This is our controller.
  * It takes the data from our Model (Article) and writes it to our view (JSON file
@@ -25,7 +28,20 @@ public class ArticleWriter {
 			 * Then write that one outer object to the PrintWriter.
 			 */
 			PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
-			
+			JSONObject jobj;
+			JSONArray arr = new JSONArray();
+			for (Article art : articles) {
+				jobj = new JSONObject();
+				jobj.put("title",art.getTitle());
+				jobj.put("author",art.getAuthor());
+				jobj.put("text",art.getText());
+				arr.add(jobj);
+			}
+//			{"articles":[{"title":"whatever","author":"whoever","text":"meh"},{ }]}
+			JSONObject all = new JSONObject();
+			all.put("articles",arr);
+			pw.println(all.toJSONString());
+			pw.close();
 			return true;
 		} catch (Exception ex) {
 			return false;
