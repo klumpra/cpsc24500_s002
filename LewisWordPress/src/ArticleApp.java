@@ -10,7 +10,8 @@ public class ArticleApp {
 		System.out.println("3. Save articles.");
 		System.out.println("4. Delete articles.");
 		System.out.println("5. Load articles.");
-		System.out.println("6. Exit");
+		System.out.println("6. Write to text");
+		System.out.println("7. Exit");
 		System.out.print("Enter your choice: ");
 		int result = sc.nextInt();
 		sc.nextLine(); // clear the end-of-line marker
@@ -39,6 +40,7 @@ public class ArticleApp {
 		String path; // where the json to write is located
 		ArticleWriter aw = new ArticleWriter();   // controller class
 		ArticleReader ar = new ArticleReader();
+		ObjectWriter<Article> writer = new ObjectWriter<Article>();
 		do {
 			choice = showMenuAndGetChoice(sc);
 			if (choice == 1) { //add an article
@@ -73,8 +75,12 @@ public class ArticleApp {
 				} else {
 					System.out.println("Success!");
 				}
+			} else if (choice == 6) {
+				System.out.print("Enter name of file: ");
+				path = sc.nextLine();
+				writer.writeToText(path,articles);
 			}
-		} while (choice != 6);
+		} while (choice != 7);
 		System.out.println("Support Freedom of the Press!");
 	}
 }

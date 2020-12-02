@@ -16,16 +16,16 @@ import org.json.simple.JSONObject;
  * @author klumpra
  *
  */
-public class DotWriter {
+public class ObjectWriter<T> {
 	/**
 	 * Write dots to a text file
 	 * @param fname the name of the text file
 	 * @param dots list of dots to write
 	 * @return true if successfully written; false otherwise
 	 */
-	public boolean writeToText(String fname, ArrayList<Dot> dots) {
+	public boolean writeToText(String fname, ArrayList<T> objects) {
 		File f = new File(fname);
-		return writeToText(f,dots);  // delegation - lean on another function to do your task
+		return writeToText(f,objects);  // delegation - lean on another function to do your task
 	}
 	/**
 	 * writes dots to a file
@@ -33,11 +33,11 @@ public class DotWriter {
 	 * @param dots the list of dots
 	 * @return true if successfully written, false otherwise
 	 */
-	public boolean writeToText(File f, ArrayList<Dot> dots) {
+	public boolean writeToText(File f, ArrayList<T> objects) {
 		try {
 			PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
-			for (Dot dot : dots) {
-				pw.println(dot);
+			for (T obj : objects) {
+				pw.println(obj);
 			}
 			pw.close();
 			return true;
@@ -46,15 +46,15 @@ public class DotWriter {
 		}
 	}
 	
-	public boolean writeToBinary(String fname, ArrayList<Dot> dots) {
+	public boolean writeToBinary(String fname, ArrayList<T> objects) {
 		File f = new File(fname);
-		return writeToBinary(f,dots);
+		return writeToBinary(f,objects);
 	}
 	
-	public boolean writeToBinary(File f, ArrayList<Dot> dots) {
+	public boolean writeToBinary(File f, ArrayList<T> objects) {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
-			oos.writeObject(dots);
+			oos.writeObject(objects);
 			oos.close();
 			return true;
 		} catch (Exception ex) {
@@ -62,19 +62,19 @@ public class DotWriter {
 		}
 	}
 	
-	public boolean write(String fname, ArrayList<Dot> dots) {
+	public boolean write(String fname, ArrayList<T> objects) {
 		File f = new File(fname);
-		return write(f,dots);
+		return write(f,objects);
 	}
-	public boolean writeToXML(String fname, ArrayList<Dot> dots) {
+	public boolean writeToXML(String fname, ArrayList<T> objects) {
 		File f = new File(fname);
-		return writeToXML(f,dots);
+		return writeToXML(f,objects);
 	}
-	public boolean writeToXML(File f, ArrayList<Dot> dots) {
+	public boolean writeToXML(File f, ArrayList<T> objects) {
 		try {
 			XMLEncoder enc = new XMLEncoder(new 
 					BufferedOutputStream(new FileOutputStream(f)));
-			enc.writeObject(dots);
+			enc.writeObject(objects);
 			enc.close();
 			return true;
 		} catch (Exception ex) {
@@ -93,15 +93,15 @@ public class DotWriter {
 	 * @param dots The dots to write
 	 * @return true if successful, false otherwise (including if unrecognized extension)
 	 */
-	public boolean write(File f, ArrayList<Dot> dots) {
+	public boolean write(File f, ArrayList<T> objects) {
 		try {
 			String fname = f.getName().toUpperCase();
 			if (fname.endsWith(".TXT")) {
-				return writeToText(f,dots);
+				return writeToText(f,objects);
 			} else if (fname.endsWith(".BIN")) {
-				return writeToBinary(f,dots);
+				return writeToBinary(f,objects);
 			} else if (fname.endsWith(".XML")) {
-				return writeToXML(f,dots);
+				return writeToXML(f,objects);
 			} else {
 				return false;  // unrecognized file format
 			}
